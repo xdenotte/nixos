@@ -4,18 +4,14 @@
     ./../modules/system.nix
     ./../modules/home.nix
     ./../modules/xdg.nix
-    ./../modules/stylix.nix
   ];
 
   networking.hostName = "hestia";
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
   boot.plymouth.enable = true;
-<<<<<<< HEAD
   boot.plymouth.theme = "bgrt";
   boot.kernelParams = [ "quiet" ];
-=======
->>>>>>> c9ec1fe352bc1751d72d982acf551a4ff0b6810c
   boot.plymouth.themePackages = [ pkgs.plymouth ];
 
   boot.initrd.systemd.enable = true;

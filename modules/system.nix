@@ -82,7 +82,6 @@
   # Audio and Some settings
   services.upower.enable = true;
   security.polkit.enable = true;
-  security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -131,7 +130,6 @@
     xdg-user-dirs
     qt6Packages.qt5compat
     loupe
-    libsForQt5.qt5.qtgraphicaleffects
     kdePackages.qtbase
     kdePackages.qtdeclarative
     kdePackages.qtstyleplugin-kvantum
