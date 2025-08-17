@@ -7,10 +7,11 @@
   ];
 
   networking.hostName = "hestia";
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_zen;
 
   boot.plymouth.enable = true;
   boot.plymouth.theme = "bgrt";
+  boot.kernelParams = [ "quiet" ];
   boot.plymouth.themePackages = [ pkgs.plymouth ];
 
   boot.initrd.systemd.enable = true;

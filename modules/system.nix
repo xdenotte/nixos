@@ -14,10 +14,6 @@
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
-    extraPackages = with pkgs; [
-      nvidia-vaapi-driver
-      vaapiVdpau
-    ];
   };
 
   hardware.nvidia = {
@@ -26,7 +22,7 @@
     open = true;
     nvidiaSettings = true;
 
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
     prime = {
       offload = {
         enable = true;
@@ -67,6 +63,7 @@
     roboto
     open-sans
     noto-fonts
+    inter
     corefonts
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif

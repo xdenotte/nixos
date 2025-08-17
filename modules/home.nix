@@ -4,7 +4,6 @@
     home.stateVersion = "25.05";
 
     home.packages = with pkgs; [
-      papirus-icon-theme
       pkgs.kdePackages.breeze
       pkgs.qt6Packages.qtstyleplugin-kvantum
       pkgs.qt6ct
@@ -22,16 +21,22 @@
     gtk = {
       enable = true;
       theme = {
-        name = "Adwaita-dark";
-        package = pkgs.gnome-themes-extra;
+        name = "Colloid-Dark";
+        package = pkgs.colloid-gtk-theme;
       };
       iconTheme = {
         name = "Papirus";
-        package = pkgs.papirus-icon-theme;
+        package = pkgs.catppuccin-papirus-folders.override {
+          flavor = "mocha";
+          accent = "peach";
+        };
       };
       font = {
         name = "Adwaita Sans";
         package = pkgs.adwaita-fonts;
+      };
+      gtk3 = {
+        extraConfig.gtk-application-prefer-dark-theme = true;
       };
     };
 
@@ -56,7 +61,6 @@
     };
 
     home.sessionVariables = {
-      GTK_THEME = "Adwaita-dark";
       QT_QPA_PLATFORMTHEME = "qt6ct";
       QT_STYLE_OVERRIDE = "Breeze";
       XCURSOR_THEME = "Bibata-Modern-Classic";
