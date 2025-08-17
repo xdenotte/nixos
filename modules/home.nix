@@ -4,12 +4,18 @@
     home.stateVersion = "25.05";
 
     home.packages = with pkgs; [
+<<<<<<< HEAD
+=======
+      papirus-icon-theme
+      colloid-gtk-theme
+>>>>>>> c9ec1fe352bc1751d72d982acf551a4ff0b6810c
       pkgs.kdePackages.breeze
       pkgs.qt6Packages.qtstyleplugin-kvantum
       pkgs.qt6ct
       bibata-cursors
     ];
 
+<<<<<<< HEAD
     home.pointerCursor = {
       gtk.enable = true;
       x11.enable = true;
@@ -49,21 +55,26 @@
       };
     };
 
+=======
+>>>>>>> c9ec1fe352bc1751d72d982acf551a4ff0b6810c
     xdg.desktopEntries.spotify = {
       name = "Spotify";
       genericName = "Music Player";
       comment = "Listen to music";
-      exec = "env GTK_THEME=Adwaita:dark spotify --force-device-scale-factor=1.25";
+      exec = "spotify --force-device-scale-factor=1.25";
       icon = "spotify";
       terminal = false;
       type = "Application";
       categories = [ "Audio" "Music" "Player" "AudioVideo" ];
     };
+<<<<<<< HEAD
 
     home.sessionVariables = {
       QT_QPA_PLATFORMTHEME = "qt6ct";
       QT_STYLE_OVERRIDE = "Breeze";
       XCURSOR_THEME = "Bibata-Modern-Classic";
     };
+=======
+>>>>>>> c9ec1fe352bc1751d72d982acf551a4ff0b6810c
   };
 }
