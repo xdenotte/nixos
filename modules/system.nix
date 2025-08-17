@@ -9,7 +9,6 @@
   services.xserver.videoDrivers = ["nvidia"];
   nixpkgs.config.allowUnfree = true;
 
-  # NVIDIA + Wayland
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
@@ -40,7 +39,7 @@
   };
 
   # Services
-  services = {
+ services = {
     power-profiles-daemon.enable = true;
     upower.enable = true;
     timesyncd.enable = true;
@@ -50,7 +49,15 @@
       enable = true;
       alsa.enable = true;
       pulse.enable = true;
-      extraConfig.pipewire."custom-tuning".context.properties."default.clock.min-quantum" = 1024;
+      extraConfig = {
+      pipewire = {
+       "bullshit-sound" = {
+         "context.properties" = {
+           "default.clock.min-quantum" = 1024;
+            };
+          };
+        };
+      };
     };
   };
 
