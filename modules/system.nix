@@ -109,7 +109,12 @@
         obs-vaapi obs-gstreamer obs-vkcapture
       ];
     };
+    virt-manager.enable = true;
   };
+
+  virtualisation.libvirtd.enable = true;
+  users.groups.libvirtd.members = ["xdenotte"];
+  virtualisation.spiceUSBRedirection.enable = true;
 
   # System packages (grouped)
   environment.systemPackages = with pkgs; [
@@ -118,13 +123,13 @@
     git fastfetch htop stress-ng lshw bbe
 
     # Wayland / WM
-    niri xwayland-satellite hypridle brightnessctl kitty xdg-user-dirs
+    niri xwayland-satellite hypridle brightnessctl kitty xdg-user-dirs wl-clipboard
 
     # Desktop & theming
     papirus-icon-theme bibata-cursors gnome-themes-extra nwg-look
     wallust swww font-manager gsettings-desktop-schemas
     qt6ct qt6Packages.qt5compat kdePackages.qtbase kdePackages.qtdeclarative
-    kdePackages.qtstyleplugin-kvantum
+    kdePackages.qtstyleplugin-kvantum matugen
 
     # Apps
     chromium discord vesktop telegram-desktop heroic prismlauncher spotify
