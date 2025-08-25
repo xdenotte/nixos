@@ -78,7 +78,7 @@
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
-      fira-sans roboto open-sans inter corefonts lilex
+      fira-sans fira-code roboto open-sans inter corefonts lilex
       noto-fonts noto-fonts-cjk-sans noto-fonts-cjk-serif
       noto-fonts-extra noto-fonts-emoji liberation_ttf
       dejavu_fonts fira-code-symbols
@@ -110,6 +110,7 @@
       ];
     };
     virt-manager.enable = true;
+    dconf.enable = true;
   };
 
   virtualisation.libvirtd.enable = true;
@@ -120,10 +121,10 @@
   environment.systemPackages = with pkgs; [
 
     # Core / utils
-    git fastfetch htop stress-ng lshw bbe
+    git fastfetch htop stress-ng lshw bbe glib
 
     # Wayland / WM
-    niri xwayland-satellite hypridle brightnessctl kitty xdg-user-dirs wl-clipboard
+    niri xwayland-satellite hypridle brightnessctl kitty xdg-user-dirs wl-clipboard cliphist
 
     # Desktop & theming
     papirus-icon-theme bibata-cursors gnome-themes-extra nwg-look
