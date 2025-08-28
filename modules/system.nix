@@ -121,7 +121,7 @@
   environment.systemPackages = with pkgs; [
 
     # Core / utils
-    git fastfetch htop stress-ng lshw bbe glib
+    git fastfetch htop stress-ng lshw bbe glib python3
 
     # Wayland / WM
     niri xwayland-satellite hypridle brightnessctl kitty xdg-user-dirs wl-clipboard cliphist
