@@ -5,7 +5,6 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  services.xserver.enable = false;
   services.xserver.videoDrivers = ["nvidia"];
   nixpkgs.config.allowUnfree = true;
 
@@ -19,7 +18,7 @@
     powerManagement.enable = false;
     open = true;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
 
     prime = {
       offload = {
@@ -133,7 +132,7 @@
     kdePackages.qtstyleplugin-kvantum matugen
 
     # Apps
-    chromium discord vesktop telegram-desktop heroic prismlauncher spotify
+    chromium vesktop telegram-desktop heroic prismlauncher spotify
     kdePackages.kate nemo libreoffice file-roller loupe
 
     # Multimedia
