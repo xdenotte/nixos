@@ -18,7 +18,7 @@
     powerManagement.enable = false;
     open = true;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
 
     prime = {
       offload = {
@@ -112,7 +112,22 @@
     dconf.enable = true;
   };
 
-  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd = {
+  enable = true;
+  qemu = {
+    package = pkgs.qemu_kvm;
+    runAsRoot = true;
+    swtpm.enable = true;
+    ovmf = {
+      enable = true;
+      packages = [(pkgs.OVMF.override {
+        secureBoot = true;
+        tpmSupport = true;
+        }).fd];
+      };
+    };
+  };
+
   users.groups.libvirtd.members = ["xdenotte"];
   virtualisation.spiceUSBRedirection.enable = true;
 
