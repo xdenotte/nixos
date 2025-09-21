@@ -138,7 +138,7 @@
     git fastfetch htop stress-ng lshw bbe glib python3 glxinfo
 
     # Wayland / WM
-    niri xwayland-satellite hypridle brightnessctl kitty xdg-user-dirs wl-clipboard cliphist
+    niri xwayland-satellite brightnessctl kitty xdg-user-dirs wl-clipboard cliphist
 
     # Desktop & theming
     papirus-icon-theme bibata-cursors gnome-themes-extra nwg-look
