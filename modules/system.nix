@@ -5,7 +5,7 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.allowUnfree = true;
 
   hardware.graphics = {
@@ -38,7 +38,7 @@
   };
 
   # Services
- services = {
+  services = {
     power-profiles-daemon.enable = true;
     upower.enable = true;
     timesyncd.enable = true;
@@ -49,10 +49,10 @@
       alsa.enable = true;
       pulse.enable = true;
       extraConfig = {
-      pipewire = {
-       "bullshit-sound" = {
-         "context.properties" = {
-           "default.clock.min-quantum" = 1024;
+        pipewire = {
+          "bullshit-sound" = {
+            "context.properties" = {
+              "default.clock.min-quantum" = 1024;
             };
           };
         };
@@ -77,11 +77,24 @@
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
-      fira-sans fira-code roboto open-sans inter corefonts lilex
-      noto-fonts noto-fonts-cjk-sans noto-fonts-cjk-serif
-      noto-fonts-extra noto-fonts-emoji liberation_ttf
-      dejavu_fonts fira-code-symbols
-      material-symbols material-icons wqy_zenhei
+      fira-sans
+      fira-code
+      roboto
+      open-sans
+      inter
+      corefonts
+      lilex
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      noto-fonts-extra
+      noto-fonts-emoji
+      liberation_ttf
+      dejavu_fonts
+      fira-code-symbols
+      material-symbols
+      material-icons
+      wqy_zenhei
     ];
   };
 
@@ -104,8 +117,12 @@
       enable = true;
       package = pkgs.obs-studio.override { cudaSupport = true; };
       plugins = with pkgs.obs-studio-plugins; [
-        wlrobs obs-backgroundremoval obs-pipewire-audio-capture
-        obs-vaapi obs-gstreamer obs-vkcapture
+        wlrobs
+        obs-backgroundremoval
+        obs-pipewire-audio-capture
+        obs-vaapi
+        obs-gstreamer
+        obs-vkcapture
       ];
     };
     virt-manager.enable = true;
@@ -113,53 +130,95 @@
   };
 
   virtualisation.libvirtd = {
-  enable = true;
-  qemu = {
-    package = pkgs.qemu_kvm;
-    runAsRoot = true;
-    swtpm.enable = true;
-    ovmf = {
-      enable = true;
-      packages = [(pkgs.OVMF.override {
-        secureBoot = true;
-        tpmSupport = true;
-        }).fd];
+    enable = true;
+    qemu = {
+      package = pkgs.qemu_kvm;
+      runAsRoot = true;
+      swtpm.enable = true;
+      ovmf = {
+        enable = true;
+        packages = [
+          (pkgs.OVMF.override {
+            secureBoot = true;
+            tpmSupport = true;
+          }).fd
+        ];
       };
     };
   };
 
-  users.groups.libvirtd.members = ["xdenotte"];
+  users.groups.libvirtd.members = [ "xdenotte" ];
   virtualisation.spiceUSBRedirection.enable = true;
 
-  # System packages (grouped)
+  # System packages (one per line)
   environment.systemPackages = with pkgs; [
-
     # Core / utils
-    git fastfetch htop stress-ng lshw bbe glib python3 glxinfo
+    git
+    fastfetch
+    htop
+    stress-ng
+    lshw
+    bbe
+    glib
+    python3
+    glxinfo
 
     # Wayland / WM
-    niri xwayland-satellite brightnessctl kitty xdg-user-dirs wl-clipboard cliphist
+    niri
+    xwayland-satellite
+    brightnessctl
+    kitty
+    xdg-user-dirs
+    wl-clipboard
+    cliphist
 
     # Desktop & theming
-    papirus-icon-theme bibata-cursors gnome-themes-extra nwg-look
-    wallust swww font-manager gsettings-desktop-schemas
-    qt6ct qt6Packages.qt5compat kdePackages.qtbase kdePackages.qtdeclarative
-    kdePackages.qtstyleplugin-kvantum matugen
+    papirus-icon-theme
+    bibata-cursors
+    gnome-themes-extra
+    nwg-look
+    wallust
+    swww
+    font-manager
+    gsettings-desktop-schemas
+    qt6ct
+    qt6Packages.qt5compat
+    kdePackages.qtbase
+    kdePackages.qtdeclarative
+    kdePackages.qtstyleplugin-kvantum
+    matugen
 
     # Apps
-    chromium vesktop telegram-desktop heroic prismlauncher spotify
-    kdePackages.kate nemo libreoffice file-roller loupe
+    chromium
+    vesktop
+    telegram-desktop
+    heroic
+    prismlauncher
+    spotify
+    kdePackages.kate
+    nemo
+    libreoffice
+    file-roller
+    loupe
 
     # Multimedia
-    mpv cava pavucontrol ffmpeg
-    gst_all_1.gstreamer gst_all_1.gst-plugins-base gst_all_1.gst-plugins-good
-    gst_all_1.gst-plugins-bad gst_all_1.gst-plugins-ugly
-    gst_all_1.gst-libav gst_all_1.gst-vaapi
+    mpv
+    cava
+    pavucontrol
+    ffmpeg
+    gst_all_1.gstreamer
+    gst_all_1.gst-plugins-base
+    gst_all_1.gst-plugins-good
+    gst_all_1.gst-plugins-bad
+    gst_all_1.gst-plugins-ugly
+    gst_all_1.gst-libav
+    gst_all_1.gst-vaapi
 
     # Gaming
     mangohud
 
     # Other
-    polkit_gnome windsurf
+    polkit_gnome
+    windsurf
   ];
 }

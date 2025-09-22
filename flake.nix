@@ -1,5 +1,5 @@
 {
-  description = "NixOS configuration";
+  description = "NixOS configuration for hestia";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -20,24 +20,13 @@
   outputs = { self, nixpkgs, home-manager, quickshell, dgop, ... }:
     let
       system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
     in {
-      packages.${system}.default = pkgs.hello;
-
       nixosConfigurations.hestia = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
           ./hosts/hestia.nix
           ./modules/system.nix
           home-manager.nixosModules.home-manager
-
-          {
-            _module.args = { inherit home-manager quickshell dgop; };
-          }
-
           ({ pkgs, ... }: {
             environment.systemPackages = [
               quickshell.packages.${system}.default
