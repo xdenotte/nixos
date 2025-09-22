@@ -15,13 +15,9 @@
       url = "github:AvengeMedia/dgop";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    warez = {
-      url = "github:edolstra/nix-warez";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { self, nixpkgs, home-manager, quickshell, dgop, warez, ... }:
+  outputs = { self, nixpkgs, home-manager, quickshell, dgop, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -39,14 +35,13 @@
           home-manager.nixosModules.home-manager
 
           {
-            _module.args = { inherit home-manager quickshell dgop warez; };
+            _module.args = { inherit home-manager quickshell dgop; };
           }
 
           ({ pkgs, ... }: {
             environment.systemPackages = [
               quickshell.packages.${system}.default
               dgop.packages.${system}.default
-              warez.packages.${system}.blender-bin
             ];
           })
         ];
