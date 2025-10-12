@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, dankMaterialShell, quickshell, ... }: {
   home-manager.users.xdenotte = {
     home.homeDirectory = "/home/xdenotte";
     home.stateVersion = "25.05";
@@ -16,6 +16,15 @@
       name = "Bibata-Modern-Classic";
       size = 24;
     };
+
+    imports = [
+      dankMaterialShell.homeModules.dankMaterialShell.default
+    ];
+    programs.dankMaterialShell = {
+      enable = true;
+      quickshell.package = quickshell.packages.${pkgs.system}.default;
+    };
+
 
     gtk = {
       enable = true;

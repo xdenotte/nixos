@@ -1,6 +1,9 @@
-{ config, pkgs, ... }:
+{ config, pkgs, dankMaterialShell, quickshell, ... }:
 
 {
+  imports = [
+    dankMaterialShell.nixosModules.greeter
+  ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   boot.loader.systemd-boot.enable = true;
@@ -43,7 +46,6 @@
     upower.enable = true;
     timesyncd.enable = true;
     gvfs.enable = true;
-    displayManager.ly.enable = true;
     pipewire = {
       enable = true;
       alsa.enable = true;
@@ -127,6 +129,11 @@
     };
     virt-manager.enable = true;
     dconf.enable = true;
+    dankMaterialShell.greeter = {
+      enable = true;
+      compositor.name = "niri";
+      configHome = "/home/xdenotte";
+    };
   };
 
   virtualisation.libvirtd = {
