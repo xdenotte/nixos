@@ -7,6 +7,7 @@
       colloid-gtk-theme
       pkgs.kdePackages.breeze
       bibata-cursors
+      adw-gtk3
     ];
 
     home.pointerCursor = {

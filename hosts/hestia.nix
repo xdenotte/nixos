@@ -7,7 +7,7 @@
   ];
 
   networking.hostName = "hestia";
-  boot.kernelPackages = pkgs.linuxPackages_cachyos-gcc;
+  boot.kernelPackages = pkgs.linuxPackages_cachyos-lto;
 
   boot.plymouth.enable = true;
   boot.plymouth.theme = "bgrt";
