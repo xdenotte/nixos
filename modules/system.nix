@@ -1,8 +1,9 @@
-{ config, pkgs, dankMaterialShell, quickshell, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [
-    dankMaterialShell.nixosModules.greeter
+    inputs.dankMaterialShell.nixosModules.greeter
+    inputs.mango.nixosModules.mango
   ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -64,16 +65,6 @@
 
   # Polkit
   security.polkit.enable = true;
-  systemd.user.services.polkit-gnome-authentication-agent-1 = {
-    description = "polkit-gnome-authentication-agent-1";
-    wantedBy = [ "graphical-session.target" ];
-    serviceConfig = {
-      Type = "simple";
-      ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-      Restart = "on-failure";
-      RestartSec = 1;
-    };
-  };
 
   # Fonts
   fonts = {
@@ -89,8 +80,7 @@
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
-      noto-fonts-extra
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       liberation_ttf
       dejavu_fonts
       fira-code-symbols
@@ -134,6 +124,7 @@
       compositor.name = "niri";
       configHome = "/home/xdenotte";
     };
+    mango.enable = true;
   };
 
   virtualisation.libvirtd = {
@@ -159,7 +150,7 @@
     bbe
     glib
     python3
-    glxinfo
+    mesa-demos
 
     # Wayland / WM
     niri
@@ -179,7 +170,7 @@
     swww
     font-manager
     gsettings-desktop-schemas
-    qt6ct
+    qt6Packages.qt6ct
     qt6Packages.qt5compat
     kdePackages.qtbase
     kdePackages.qtdeclarative
@@ -198,6 +189,7 @@
     libreoffice-qt
     file-roller
     loupe
+    protonup-qt
 
     # Multimedia
     mpv
@@ -216,7 +208,6 @@
     mangohud
 
     # Other
-    polkit_gnome
     windsurf
   ];
 }

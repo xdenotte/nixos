@@ -1,7 +1,11 @@
-{ pkgs, dankMaterialShell, quickshell, ... }: {
+{ pkgs, inputs, ... }: {
   home-manager.users.xdenotte = {
     home.homeDirectory = "/home/xdenotte";
     home.stateVersion = "25.05";
+
+    imports = [
+      inputs.dankMaterialShell.homeModules.dankMaterialShell.default
+    ];
 
     home.packages = with pkgs; [
       colloid-gtk-theme
@@ -18,12 +22,9 @@
       size = 24;
     };
 
-    imports = [
-      dankMaterialShell.homeModules.dankMaterialShell.default
-    ];
     programs.dankMaterialShell = {
       enable = true;
-      quickshell.package = quickshell.packages.${pkgs.system}.default;
+      quickshell.package = inputs.quickshell.packages.${pkgs.system}.default;
     };
 
 

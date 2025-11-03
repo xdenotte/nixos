@@ -12,19 +12,32 @@
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    dgop = {
+      url = "github:AvengeMedia/dgop";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    dms-cli = {
+      url = "github:AvengeMedia/danklinux";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     dankMaterialShell = {
       url = "github:AvengeMedia/DankMaterialShell";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.dgop.follows = "dgop";
+      inputs.dms-cli.follows = "dms-cli";
+    };
+    mango = {
+      url = "github:DreamMaoMao/mango";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-
-  outputs = { self, nixpkgs, chaotic, home-manager, quickshell, dankMaterialShell, ... }:
+  outputs = inputs@{ self, nixpkgs, chaotic, home-manager, quickshell, dankMaterialShell, mango, ... }:
     let
       system = "x86_64-linux";
     in {
       nixosConfigurations.hestia = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit chaotic quickshell dankMaterialShell; };
+        specialArgs = { inherit inputs; };
         modules = [
           ./hosts/hestia.nix
           ./modules/system.nix
