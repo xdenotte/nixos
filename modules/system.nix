@@ -3,7 +3,6 @@
 {
   imports = [
     inputs.dankMaterialShell.nixosModules.greeter
-    inputs.mango.nixosModules.mango
   ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -66,6 +65,11 @@
   # Polkit
   security.polkit.enable = true;
 
+  # XDG Portal
+  xdg.portal = {
+    enable = true;
+  };
+
   # Fonts
   fonts = {
     enableDefaultPackages = true;
@@ -124,7 +128,6 @@
       compositor.name = "niri";
       configHome = "/home/xdenotte";
     };
-    mango.enable = true;
   };
 
   virtualisation.libvirtd = {
@@ -151,9 +154,10 @@
     glib
     python3
     mesa-demos
+    zip
+    unzip
 
     # Wayland / WM
-    niri
     xwayland-satellite
     brightnessctl
     kitty
@@ -184,10 +188,11 @@
     heroic
     prismlauncher
     spotify
-    kdePackages.kate
-    nemo
-    libreoffice-qt
+    nemo-fileroller
+    nemo-with-extensions
     file-roller
+    kdePackages.kate
+    libreoffice-qt
     loupe
     protonup-qt
 
@@ -206,6 +211,11 @@
 
     # Gaming
     mangohud
+
+    # Portals
+    xdg-desktop-portal
+    xdg-desktop-portal-gtk
+    xdg-desktop-portal-gnome
 
     # Other
     windsurf

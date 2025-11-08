@@ -26,12 +26,8 @@
       inputs.dgop.follows = "dgop";
       inputs.dms-cli.follows = "dms-cli";
     };
-    mango = {
-      url = "github:DreamMaoMao/mango";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
-  outputs = inputs@{ self, nixpkgs, chaotic, home-manager, quickshell, dankMaterialShell, mango, ... }:
+  outputs = inputs@{ self, nixpkgs, chaotic, home-manager, quickshell, dankMaterialShell, ... }:
     let
       system = "x86_64-linux";
     in {

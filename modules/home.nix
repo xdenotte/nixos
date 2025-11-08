@@ -59,6 +59,7 @@
       QT_QPA_PLATFORMTHEME = "qt6ct";
       QT_STYLE_OVERRIDE = "Breeze";
       XCURSOR_THEME = "Bibata-Modern-Classic";
+      GTK_THEME = "adw-gtk3-dark";
     };
   };
 }

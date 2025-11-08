@@ -3,7 +3,6 @@
     ./hardware-configuration.nix
     ./../modules/system.nix
     ./../modules/home.nix
-    ./../modules/xdg.nix
   ];
 
   networking.hostName = "hestia";
