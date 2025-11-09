@@ -68,6 +68,20 @@
   # XDG Portal
   xdg.portal = {
     enable = true;
+    config = {
+      #common.default = "*";
+      common = {
+        default = ["gnome" "gtk"];
+        "org.freedesktop.impl.portal.ScreenCast" = "gnome";
+        "org.freedesktop.impl.portal.RemoteDesktop" = "gnome";
+        "org.freedesktop.impl.portal.FileChooser" = "gtk";
+      };
+    };
+    extraPortals = with pkgs; [
+      xdg-desktop-portal
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-gnome
+    ];
   };
 
   # Fonts
@@ -106,8 +120,11 @@
       enable = true;
       binfmt = true;
     };
-    niri.enable = true;
     gamemode.enable = true;
+    niri = {
+      enable = true;
+      package = pkgs.niri_git;
+    };
     steam.enable = true;
     obs-studio = {
       enable = true;
@@ -211,11 +228,6 @@
 
     # Gaming
     mangohud
-
-    # Portals
-    xdg-desktop-portal
-    xdg-desktop-portal-gtk
-    xdg-desktop-portal-gnome
 
     # Other
     windsurf
