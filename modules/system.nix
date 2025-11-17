@@ -68,19 +68,24 @@
   # XDG Portal
   xdg.portal = {
     enable = true;
+    xdgOpenUsePortal = true;
+    wlr.enable = true;
     config = {
-      #common.default = "*";
       common = {
-        default = ["gnome" "gtk"];
-        "org.freedesktop.impl.portal.ScreenCast" = "gnome";
-        "org.freedesktop.impl.portal.RemoteDesktop" = "gnome";
+        default = [
+          "gtk"
+        ];
         "org.freedesktop.impl.portal.FileChooser" = "gtk";
+      };
+      niri = {
+      "org.freedesktop.impl.portal.ScreenCast" = "gnome";
       };
     };
     extraPortals = with pkgs; [
       xdg-desktop-portal
-      xdg-desktop-portal-gtk
       xdg-desktop-portal-gnome
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-wlr
     ];
   };
 
@@ -215,6 +220,7 @@
 
     # Multimedia
     mpv
+    audacity
     cava
     pavucontrol
     ffmpeg
