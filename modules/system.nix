@@ -21,13 +21,13 @@
     powerManagement.enable = false;
     open = true;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
 
     prime = {
       offload = {
-        enable = true;
-        enableOffloadCmd = true;
-      };
+      enable = true;
+      enableOffloadCmd = true;
+    };
       amdgpuBusId = "PCI:05:0:0";
       nvidiaBusId = "PCI:1:0:0";
     };
@@ -62,30 +62,20 @@
     };
   };
 
-  # Polkit
+  # Security
   security.polkit.enable = true;
 
   # XDG Portal
   xdg.portal = {
     enable = true;
-    xdgOpenUsePortal = true;
-    wlr.enable = true;
     config = {
-      common = {
-        default = [
-          "gtk"
-        ];
-        "org.freedesktop.impl.portal.FileChooser" = "gtk";
-      };
-      niri = {
-      "org.freedesktop.impl.portal.ScreenCast" = "gnome";
-      };
+      niri.default = ["gtk" "gnome"];
+      common.default = ["gtk"];
+      obs.default = "gnome";
     };
     extraPortals = with pkgs; [
-      xdg-desktop-portal
       xdg-desktop-portal-gnome
       xdg-desktop-portal-gtk
-      xdg-desktop-portal-wlr
     ];
   };
 
@@ -126,23 +116,9 @@
       binfmt = true;
     };
     gamemode.enable = true;
-    niri = {
-      enable = true;
-      package = pkgs.niri_git;
-    };
+    niri.enable = true;
     steam.enable = true;
-    obs-studio = {
-      enable = true;
-      package = pkgs.obs-studio.override { cudaSupport = true; };
-      plugins = with pkgs.obs-studio-plugins; [
-        wlrobs
-        obs-backgroundremoval
-        obs-pipewire-audio-capture
-        obs-vaapi
-        obs-gstreamer
-        obs-vkcapture
-      ];
-    };
+    gpu-screen-recorder.enable = true;
     virt-manager.enable = true;
     dconf.enable = true;
     dankMaterialShell.greeter = {
@@ -186,6 +162,8 @@
     xdg-user-dirs
     wl-clipboard
     cliphist
+    grim
+    slurp
 
     # Desktop & theming
     papirus-icon-theme
@@ -205,6 +183,7 @@
 
     # Apps
     chromium
+    gpu-screen-recorder-gtk
     vesktop
     telegram-desktop
     heroic

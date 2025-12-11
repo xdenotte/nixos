@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,7 +21,8 @@
       inputs.dgop.follows = "dgop";
     };
   };
-  outputs = inputs@{ self, nixpkgs, chaotic, home-manager, quickshell, dankMaterialShell, ... }:
+
+  outputs = inputs@{ self, nixpkgs, home-manager, quickshell, dankMaterialShell, ... }:
     let
       system = "x86_64-linux";
     in {
@@ -33,7 +33,6 @@
           ./hosts/hestia.nix
           ./modules/system.nix
           home-manager.nixosModules.home-manager
-          chaotic.nixosModules.default
         ];
       };
     };
