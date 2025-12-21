@@ -43,6 +43,9 @@
   # Services
   services = {
     power-profiles-daemon.enable = true;
+    cloudflare-warp = {
+      enable = true;
+    };
     upower.enable = true;
     timesyncd.enable = true;
     gvfs.enable = true;
@@ -64,6 +67,7 @@
 
   # Security
   security.polkit.enable = true;
+  security.rtkit.enable = true;
 
   # XDG Portal
   xdg.portal = {
@@ -115,17 +119,30 @@
       enable = true;
       binfmt = true;
     };
+    nix-ld.enable = true;
     gamemode.enable = true;
-    niri.enable = true;
+    niri = {
+      enable = true;
+      package = pkgs.niri-unstable;
+    };
     steam.enable = true;
     gpu-screen-recorder.enable = true;
     virt-manager.enable = true;
     dconf.enable = true;
-    dankMaterialShell.greeter = {
+    dank-material-shell.greeter = {
       enable = true;
       compositor.name = "niri";
       configHome = "/home/xdenotte";
     };
+  };
+
+  nix.settings = {
+    substituters = [
+      "https://cache.garnix.io"
+    ];
+    trusted-public-keys = [
+      "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
+    ];
   };
 
   virtualisation.libvirtd = {
@@ -181,7 +198,7 @@
     kdePackages.qtstyleplugin-kvantum
     matugen
 
-    # Apps
+    # Apps and Games
     chromium
     gpu-screen-recorder-gtk
     vesktop
@@ -196,6 +213,7 @@
     libreoffice-qt
     loupe
     protonup-qt
+    cloudflare-warp
 
     # Multimedia
     mpv

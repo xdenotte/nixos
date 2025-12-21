@@ -20,9 +20,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.dgop.follows = "dgop";
     };
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, quickshell, dankMaterialShell, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, quickshell, dankMaterialShell, niri, ... }:
     let
       system = "x86_64-linux";
     in {
@@ -30,9 +34,15 @@
         inherit system;
         specialArgs = { inherit inputs; };
         modules = [
+          ({ pkgs, ... }: {
+            nixpkgs.overlays = [
+              niri.overlays.niri
+            ];
+          })
           ./hosts/hestia.nix
           ./modules/system.nix
           home-manager.nixosModules.home-manager
+          niri.nixosModules.niri
         ];
       };
     };

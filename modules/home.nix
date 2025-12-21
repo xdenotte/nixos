@@ -4,7 +4,7 @@
     home.stateVersion = "25.05";
 
     imports = [
-      inputs.dankMaterialShell.homeModules.dankMaterialShell.default
+      inputs.dankMaterialShell.homeModules.dank-material-shell
     ];
 
     home.packages = with pkgs; [
@@ -22,7 +22,7 @@
       size = 24;
     };
 
-    programs.dankMaterialShell = {
+    programs.dank-material-shell = {
       enable = true;
       quickshell.package = inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default;
     };
