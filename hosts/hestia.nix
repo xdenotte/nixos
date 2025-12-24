@@ -12,13 +12,14 @@
   boot.plymouth.theme = "bgrt";
   boot.kernelParams = [ "quiet" ];
   boot.plymouth.themePackages = [ pkgs.plymouth ];
+  boot.blacklistedKernelModules = [ "nova_core" ];
 
   boot.initrd.systemd.enable = true;
   boot.initrd.kernelModules = [ "ntsync" ];
 
   users.users.xdenotte = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "audio" "networkmanager" ];
+    extraGroups = [ "input" "wheel" "video" "audio" "networkmanager" ];
     packages = with pkgs; [ home-manager ];
   };
 

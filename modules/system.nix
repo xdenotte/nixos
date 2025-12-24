@@ -16,12 +16,12 @@
     enable32Bit = true;
   };
 
-  hardware.nvidia = {
+   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = false;
     open = true;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
 
     prime = {
       offload = {
@@ -154,6 +154,12 @@
     };
   };
 
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    memoryPercent = 30;
+  };
+
   users.groups.libvirtd.members = [ "xdenotte" ];
   virtualisation.spiceUSBRedirection.enable = true;
 
@@ -173,7 +179,7 @@
     unzip
 
     # Wayland / WM
-    xwayland-satellite
+    xwayland-satellite-unstable
     brightnessctl
     kitty
     xdg-user-dirs
