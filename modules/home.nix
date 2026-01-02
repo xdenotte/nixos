@@ -4,7 +4,7 @@
     home.stateVersion = "25.05";
 
     imports = [
-      inputs.dankMaterialShell.homeModules.dank-material-shell
+      inputs.dms.homeModules.dank-material-shell
     ];
 
     home.packages = with pkgs; [

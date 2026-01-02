@@ -11,22 +11,18 @@
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    dgop = {
-      url = "github:AvengeMedia/dgop";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    dankMaterialShell = {
+    dms = {
       url = "github:AvengeMedia/DankMaterialShell";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.dgop.follows = "dgop";
     };
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, quickshell, dankMaterialShell, niri, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, quickshell, dms, niri, nix-cachyos-kernel, ... }:
     let
       system = "x86_64-linux";
     in {
@@ -37,6 +33,7 @@
           ({ pkgs, ... }: {
             nixpkgs.overlays = [
               niri.overlays.niri
+              nix-cachyos-kernel.overlays.default
             ];
           })
           ./hosts/hestia.nix

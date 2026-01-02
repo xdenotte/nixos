@@ -2,7 +2,7 @@
 
 {
   imports = [
-    inputs.dankMaterialShell.nixosModules.greeter
+    inputs.dms.nixosModules.greeter
   ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -10,13 +10,14 @@
   boot.loader.efi.canTouchEfiVariables = true;
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.allowUnfree = true;
+  systemd.user.services.niri-flake-polkit.enable = false;
 
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
   };
 
-   hardware.nvidia = {
+  hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = false;
     open = true;
@@ -67,7 +68,6 @@
 
   # Security
   security.polkit.enable = true;
-  security.rtkit.enable = true;
 
   # XDG Portal
   xdg.portal = {
@@ -138,10 +138,10 @@
 
   nix.settings = {
     substituters = [
-      "https://cache.garnix.io"
+      "https://attic.xuyh0120.win/lantian"
     ];
     trusted-public-keys = [
-      "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
+      "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
     ];
   };
 
@@ -220,6 +220,7 @@
     loupe
     protonup-qt
     cloudflare-warp
+    kdiskmark
 
     # Multimedia
     mpv
@@ -240,5 +241,6 @@
 
     # Other
     windsurf
+    opencode
   ];
 }
