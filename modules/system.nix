@@ -241,6 +241,5 @@
 
     # Other
     windsurf
-    opencode
   ];
 }
