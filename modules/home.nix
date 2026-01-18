@@ -25,6 +25,11 @@
     programs.dank-material-shell = {
       enable = true;
       quickshell.package = inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default;
+
+      systemd = {
+        enable = true;
+        restartIfChanged = true;
+      };
     };
 
 

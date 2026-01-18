@@ -44,9 +44,8 @@
   # Services
   services = {
     power-profiles-daemon.enable = true;
-    cloudflare-warp = {
-      enable = true;
-    };
+    flatpak.enable = true;
+    accounts-daemon.enable = true;
     upower.enable = true;
     timesyncd.enable = true;
     gvfs.enable = true;
@@ -219,7 +218,6 @@
     libreoffice-qt
     loupe
     protonup-qt
-    cloudflare-warp
     kdiskmark
 
     # Multimedia
@@ -238,6 +236,7 @@
 
     # Gaming
     mangohud
+    hytale-launcher
 
     # Other
     windsurf

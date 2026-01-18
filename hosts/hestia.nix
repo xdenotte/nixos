@@ -6,13 +6,12 @@
   ];
 
   networking.hostName = "hestia";
-  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bmq-lto;
+  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto;
 
   boot.plymouth.enable = true;
   boot.plymouth.theme = "bgrt";
   boot.kernelParams = [ "quiet" ];
   boot.plymouth.themePackages = [ pkgs.plymouth ];
-  boot.blacklistedKernelModules = [ "nova_core" ];
 
   boot.initrd.systemd.enable = true;
   boot.initrd.kernelModules = [ "ntsync" ];

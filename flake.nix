@@ -20,9 +20,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+    hytale-nix.url = "path:/home/xdenotte/hytale-nix";
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, quickshell, dms, niri, nix-cachyos-kernel, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, quickshell, dms, niri, nix-cachyos-kernel, hytale-nix, ... }:
     let
       system = "x86_64-linux";
     in {
@@ -33,7 +34,8 @@
           ({ pkgs, ... }: {
             nixpkgs.overlays = [
               niri.overlays.niri
-              nix-cachyos-kernel.overlays.default
+              nix-cachyos-kernel.overlays.pinned
+              hytale-nix.overlays.default
             ];
           })
           ./hosts/hestia.nix
