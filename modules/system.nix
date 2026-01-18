@@ -44,7 +44,6 @@
   # Services
   services = {
     power-profiles-daemon.enable = true;
-    flatpak.enable = true;
     accounts-daemon.enable = true;
     upower.enable = true;
     timesyncd.enable = true;
