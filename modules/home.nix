@@ -5,6 +5,7 @@
 
     imports = [
       inputs.dms.homeModules.dank-material-shell
+      inputs.dsearch.homeModules.default
     ];
 
     home.packages = with pkgs; [
@@ -22,16 +23,20 @@
       size = 24;
     };
 
-    programs.dank-material-shell = {
-      enable = true;
-      quickshell.package = inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default;
-
-      systemd = {
+    programs = {
+      dank-material-shell = {
         enable = true;
-        restartIfChanged = true;
-      };
-    };
+        quickshell.package = inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
+        systemd = {
+          enable = true;
+          restartIfChanged = true;
+        };
+
+        enableCalendarEvents = false;
+      };
+      dsearch.enable = true;
+    };
 
     gtk = {
       enable = true;
