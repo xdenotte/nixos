@@ -113,6 +113,7 @@
 
   # Programs
   programs = {
+    firefox.enable = true;
     appimage = {
       enable = true;
       binfmt = true;
@@ -200,7 +201,6 @@
     matugen
 
     # Apps and Games
-    firefox
     gpu-screen-recorder-gtk
     vesktop
     telegram-desktop

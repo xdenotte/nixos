@@ -5,7 +5,6 @@
 
     imports = [
       inputs.dms.homeModules.dank-material-shell
-      inputs.dsearch.homeModules.default
     ];
 
     home.packages = with pkgs; [
