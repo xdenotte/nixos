@@ -28,18 +28,13 @@
         enable = true;
         quickshell.package = inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
-        systemd = {
-          enable = true;
-          restartIfChanged = true;
-        };
-
         enableCalendarEvents = false;
       };
-      dsearch.enable = true;
     };
 
     gtk = {
       enable = true;
+      gtk4.theme = null;
       iconTheme = {
         name = "Papirus";
         package = pkgs.catppuccin-papirus-folders.override {
@@ -50,9 +45,6 @@
       font = {
         name = "Adwaita Sans";
         package = pkgs.adwaita-fonts;
-      };
-      gtk3 = {
-        extraConfig.gtk-application-prefer-dark-theme = true;
       };
     };
 
@@ -69,7 +61,7 @@
       QT_QPA_PLATFORMTHEME = "qt6ct";
       QT_STYLE_OVERRIDE = "Breeze";
       XCURSOR_THEME = "Bibata-Modern-Classic";
-      GTK_THEME = "adw-gtk3-dark";
+      GTK_THEME = "adw-gtk3";
     };
   };
 }

@@ -22,14 +22,7 @@
     powerManagement.enable = false;
     open = true;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-      version = "595.45.04";
-      sha256_64bit = "sha256-zUllSSRsuio7dSkcbBTuxF+dN12d6jEPE0WgGvVOj14=";
-      sha256_aarch64 = "sha256-jl6lQWsgF6ya22sAhYPpERJ9r+wjnWzbGnINDpUMzsk=";
-      openSha256 = "sha256-uqNfImwTKhK8gncUdP1TPp0D6Gog4MSeIJMZQiJWDoE=";
-      settingsSha256 = "sha256-Y45pryyM+6ZTJyRaRF3LMKaiIWxB5gF5gGEEcQVr9nA=";
-      persistencedSha256 = "sha256-5FoeUaRRMBIPEWGy4Uo0Aho39KXmjzQsuAD9m/XkNpA=";
-    };
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
 
     prime = {
       offload = {
@@ -186,12 +179,10 @@
     # Wayland / WM
     xwayland-satellite-unstable
     brightnessctl
-    kitty
+    foot
     xdg-user-dirs
     wl-clipboard
     cliphist
-    grim
-    slurp
 
     # Desktop & theming
     papirus-icon-theme
@@ -199,7 +190,6 @@
     gnome-themes-extra
     nwg-look
     wallust
-    swww
     font-manager
     gsettings-desktop-schemas
     qt6Packages.qt6ct
@@ -210,7 +200,7 @@
     matugen
 
     # Apps and Games
-    chromium
+    firefox
     gpu-screen-recorder-gtk
     vesktop
     telegram-desktop
@@ -224,6 +214,7 @@
     loupe
     protonplus
     kdiskmark
+    libreoffice-qt
 
     # Multimedia
     mpv
