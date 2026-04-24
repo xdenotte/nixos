@@ -71,8 +71,8 @@
   xdg.portal = {
     enable = true;
     config = {
-      niri.default = ["gtk" "gnome"];
-      common.default = ["gtk"];
+      niri.default = ["gnome"];
+      common.default = ["gnome"];
       obs.default = "gnome";
     };
     extraPortals = with pkgs; [
@@ -207,8 +207,7 @@
     heroic
     prismlauncher
     spotify
-    nemo-fileroller
-    nemo-with-extensions
+    nautilus
     file-roller
     kdePackages.kate
     loupe
