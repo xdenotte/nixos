@@ -71,11 +71,13 @@
   xdg.portal = {
     enable = true;
     config = {
-      niri.default = ["gnome"];
-      common.default = ["gnome"];
+      niri.default = ["gnome" "gtk"];
+      niri-tracy.default = ["gtk"];
+      common.default = ["gtk"];
       obs.default = "gnome";
     };
     extraPortals = with pkgs; [
+      xdg-desktop-portal
       xdg-desktop-portal-gnome
       xdg-desktop-portal-gtk
     ];
