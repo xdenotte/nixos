@@ -11,6 +11,8 @@
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.allowUnfree = true;
   systemd.user.services.niri-flake-polkit.enable = false;
+  powerManagement.enable = true;
+  hardware.enableAllFirmware = true;
 
   hardware.graphics = {
     enable = true;
@@ -19,7 +21,8 @@
 
   hardware.nvidia = {
     modesetting.enable = true;
-    powerManagement.enable = false;
+    powerManagement.enable = true;
+    powerManagement.finegrained = true;
     open = true;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.latest;
@@ -29,7 +32,7 @@
       enable = true;
       enableOffloadCmd = true;
     };
-      amdgpuBusId = "PCI:05:0:0";
+      amdgpuBusId = "PCI:5:0:0";
       nvidiaBusId = "PCI:1:0:0";
     };
   };
@@ -43,20 +46,32 @@
 
   # Services
   services = {
-    power-profiles-daemon.enable = true;
     accounts-daemon.enable = true;
     upower.enable = true;
     timesyncd.enable = true;
     gvfs.enable = true;
-    pipewire = {
+    auto-cpufreq = {
       enable = true;
-      alsa.enable = true;
-      pulse.enable = true;
-      extraConfig = {
-        pipewire = {
-          "bullshit-sound" = {
-            "context.properties" = {
-              "default.clock.min-quantum" = 1024;
+      settings = {
+      battery = {
+        governor = "powersave";
+        turbo = "never";
+      };
+      charger = {
+        governor = "performance";
+        turbo = "auto";
+      };
+    };
+  };
+  pipewire = {
+    enable = true;
+    alsa.enable = true;
+    pulse.enable = true;
+    extraConfig = {
+      pipewire = {
+        "bullshit-sound" = {
+          "context.properties" = {
+            "default.clock.min-quantum" = 1024;
             };
           };
         };
@@ -66,13 +81,13 @@
 
   # Security
   security.polkit.enable = true;
+  security.rtkit.enable = true;
 
   # XDG Portal
   xdg.portal = {
     enable = true;
     config = {
       niri.default = ["gnome" "gtk"];
-      niri-tracy.default = ["gtk"];
       common.default = ["gtk"];
       obs.default = "gnome";
     };
@@ -135,17 +150,28 @@
       compositor.name = "niri";
       configHome = "/home/xdenotte";
     };
+    obs-studio = {
+      enable = true;
+
+    # optional Nvidia hardware acceleration
+      package = (
+      pkgs.obs-studio.override {
+        cudaSupport = true;
+      }
+    );
+
+      plugins = with pkgs.obs-studio-plugins; [
+        wlrobs
+        obs-backgroundremoval
+        obs-pipewire-audio-capture
+        obs-vaapi
+        obs-gstreamer
+        obs-vkcapture
+      ];
+    };
   };
 
-  nix.settings = {
-    substituters = [
-      "https://attic.xuyh0120.win/lantian"
-    ];
-    trusted-public-keys = [
-      "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
-    ];
-  };
-
+  # VM
   virtualisation.libvirtd = {
     enable = true;
     qemu = {
@@ -155,14 +181,31 @@
     };
   };
 
+  users.groups.libvirtd.members = [ "xdenotte" ];
+  virtualisation.spiceUSBRedirection.enable = true;
+
+  # Swap
+  swapDevices = [{
+    device = "/var/lib/swapfile";
+    size = 8*1024;
+    priority = 0;
+  }];
+
   zramSwap = {
     enable = true;
     algorithm = "zstd";
+    priority = 100;
     memoryPercent = 30;
   };
 
-  users.groups.libvirtd.members = [ "xdenotte" ];
-  virtualisation.spiceUSBRedirection.enable = true;
+  nix.settings = {
+    substituters = [
+      "https://niri-nix.cachix.org"
+    ];
+    trusted-public-keys = [
+      "niri-nix.cachix.org-1:SvFtqpDcf7Sm1SMJdby1/+Y+6f3Yt3/3PMcSTKPJNJ0="
+    ];
+  };
 
   # System packages (one per line)
   environment.systemPackages = with pkgs; [
@@ -172,12 +215,9 @@
     htop
     stress-ng
     lshw
-    bbe
     glib
     python3
     mesa-demos
-    zip
-    unzip
 
     # Wayland / WM
     xwayland-satellite-unstable
@@ -192,7 +232,6 @@
     bibata-cursors
     gnome-themes-extra
     nwg-look
-    wallust
     font-manager
     gsettings-desktop-schemas
     qt6Packages.qt6ct
@@ -212,6 +251,7 @@
     nautilus
     file-roller
     kdePackages.kate
+    kdePackages.kdenlive
     loupe
     protonplus
     kdiskmark

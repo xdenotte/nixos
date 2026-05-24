@@ -7,22 +7,16 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    quickshell = {
-      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     dms = {
       url = "github:AvengeMedia/DankMaterialShell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    niri = {
-      url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
+    niri-nix = {
+      url = "git+https://codeberg.org/BANanaD3V/niri-nix";
     };
-    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel";
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, quickshell, dms, niri, nix-cachyos-kernel, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, dms, niri-nix, ... }:
     let
       system = "x86_64-linux";
     in {
@@ -32,14 +26,12 @@
         modules = [
           ({ pkgs, ... }: {
             nixpkgs.overlays = [
-              niri.overlays.niri
-              nix-cachyos-kernel.overlays.pinned
+              niri-nix.overlays.niri-nix
             ];
           })
           ./hosts/hestia.nix
           ./modules/system.nix
           home-manager.nixosModules.home-manager
-          niri.nixosModules.niri
         ];
       };
     };

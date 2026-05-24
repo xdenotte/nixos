@@ -6,7 +6,7 @@
   ];
 
   networking.hostName = "hestia";
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_zen;
 
   boot.plymouth.enable = true;
   boot.plymouth.theme = "bgrt";
@@ -18,7 +18,7 @@
 
   users.users.xdenotte = {
     isNormalUser = true;
-    extraGroups = [ "input" "wheel" "video" "audio" "networkmanager" ];
+    extraGroups = [ "input" "wheel" "video" "audio" "networkmanager" "gamemode" ];
     packages = with pkgs; [ home-manager ];
   };
 
