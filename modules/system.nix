@@ -10,7 +10,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.allowUnfree = true;
-  systemd.user.services.niri-flake-polkit.enable = false;
   powerManagement.enable = true;
   hardware.enableAllFirmware = true;
 
