@@ -255,6 +255,7 @@
     protonplus
     kdiskmark
     libreoffice-qt
+    inputs.blender-bin.packages.${stdenv.hostPlatform.system}.default
 
     # Multimedia
     mpv

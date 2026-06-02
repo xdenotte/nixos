@@ -14,9 +14,10 @@
     niri-nix = {
       url = "git+https://codeberg.org/BANanaD3V/niri-nix";
     };
+    blender-bin.url = "https://flakehub.com/f/edolstra/blender-bin/*";
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, dms, niri-nix, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, dms, niri-nix, blender-bin, ... }:
     let
       system = "x86_64-linux";
     in {
