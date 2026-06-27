@@ -7,8 +7,12 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    dms = {
-      url = "github:AvengeMedia/DankMaterialShell";
+    noctalia = {
+      url = "github:noctalia-dev/noctalia";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    noctalia-greeter = {
+      url = "github:noctalia-dev/noctalia-greeter";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     niri-nix = {
@@ -17,7 +21,7 @@
     blender-bin.url = "https://flakehub.com/f/edolstra/blender-bin/*";
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, dms, niri-nix, blender-bin, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, niri-nix, blender-bin, ... }:
     let
       system = "x86_64-linux";
     in {

@@ -2,7 +2,7 @@
 
 {
   imports = [
-    inputs.dms.nixosModules.greeter
+    inputs.noctalia-greeter.nixosModules.default
   ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -144,10 +144,9 @@
     gpu-screen-recorder.enable = true;
     virt-manager.enable = true;
     dconf.enable = true;
-    dank-material-shell.greeter = {
+    noctalia-greeter = {
       enable = true;
-      compositor.name = "niri";
-      configHome = "/home/xdenotte";
+      package = inputs.noctalia-greeter.packages.${pkgs.stdenv.hostPlatform.system}.default;
     };
     obs-studio = {
       enable = true;
@@ -200,9 +199,11 @@
   nix.settings = {
     substituters = [
       "https://niri-nix.cachix.org"
+      "https://noctalia.cachix.org"
     ];
     trusted-public-keys = [
       "niri-nix.cachix.org-1:SvFtqpDcf7Sm1SMJdby1/+Y+6f3Yt3/3PMcSTKPJNJ0="
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
     ];
   };
 

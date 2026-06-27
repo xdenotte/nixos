@@ -4,7 +4,7 @@
     home.stateVersion = "25.05";
 
     imports = [
-      inputs.dms.homeModules.dank-material-shell
+      inputs.noctalia.homeModules.default
     ];
 
     home.packages = with pkgs; [
@@ -23,9 +23,8 @@
     };
 
     programs = {
-      dank-material-shell = {
+      noctalia = {
         enable = true;
-        enableCalendarEvents = false;
       };
     };
 
@@ -62,4 +61,3 @@
     };
   };
 }
-
