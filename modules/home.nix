@@ -13,8 +13,23 @@
       bibata-cursors
       adw-gtk3
     ];
+    xdg.userDirs = {
+      enable = true;
+
+      desktop = "$HOME/Рабочий стол";
+      documents = "$HOME/Документы";
+      download = "$HOME/Загрузки";
+      music = "$HOME/Музыка";
+      pictures = "$HOME/Изображения";
+      publicShare = "$HOME/Общий";
+      templates = "$HOME/Шаблоны";
+      videos = "$HOME/Видео";
+
+      setSessionVariables = false;
+    };
 
     home.pointerCursor = {
+      enable = true;
       gtk.enable = true;
       x11.enable = true;
       package = pkgs.bibata-cursors;

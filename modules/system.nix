@@ -4,190 +4,207 @@
   imports = [
     inputs.noctalia-greeter.nixosModules.default
   ];
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
+  ############################################################
+  ## Nix
+  ############################################################
+
   nixpkgs.config.allowUnfree = true;
-  powerManagement.enable = true;
-  hardware.enableAllFirmware = true;
 
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    auto-optimise-store = true;
+
+    substituters = [
+      "https://niri-nix.cachix.org"
+      "https://noctalia.cachix.org"
+    ];
+
+    trusted-public-keys = [
+      "niri-nix.cachix.org-1:SvFtqpDcf7Sm1SMJdby1/+Y+6f3Yt3/3PMcSTKPJNJ0="
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+    ];
   };
 
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = true;
-    powerManagement.finegrained = true;
-    open = true;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
-
-    prime = {
-      offload = {
-      enable = true;
-      enableOffloadCmd = true;
-    };
-      amdgpuBusId = "PCI:5:0:0";
-      nvidiaBusId = "PCI:1:0:0";
-    };
-  };
-
-  # System cleanup
   nix.gc = {
     automatic = true;
     dates = "daily";
     options = "--delete-older-than 10d";
   };
 
-  # Services
-  services = {
-    accounts-daemon.enable = true;
-    upower.enable = true;
-    timesyncd.enable = true;
-    gvfs.enable = true;
-    auto-cpufreq = {
+  ############################################################
+  ## Boot
+  ############################################################
+
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  ############################################################
+  ## Hardware
+  ############################################################
+
+  powerManagement.enable = true;
+
+  hardware = {
+    bluetooth.enable = true;
+
+    graphics = {
       enable = true;
-      settings = {
-      battery = {
-        governor = "powersave";
-        turbo = "never";
-      };
-      charger = {
-        governor = "performance";
-        turbo = "auto";
-      };
+      enable32Bit = true;
     };
-  };
-  pipewire = {
-    enable = true;
-    alsa.enable = true;
-    pulse.enable = true;
-    extraConfig = {
-      pipewire = {
-        "bullshit-sound" = {
-          "context.properties" = {
-            "default.clock.min-quantum" = 1024;
-            };
-          };
+
+    nvidia = {
+      modesetting.enable = true;
+
+      powerManagement = {
+        enable = true;
+        finegrained = true;
+      };
+
+      open = true;
+      nvidiaSettings = true;
+      package = config.boot.kernelPackages.nvidiaPackages.latest;
+
+      prime = {
+        amdgpuBusId = "PCI:5:0:0";
+        nvidiaBusId = "PCI:1:0:0";
+
+        offload = {
+          enable = true;
+          enableOffloadCmd = true;
         };
       };
     };
   };
 
-  # Security
-  security.polkit.enable = true;
-  security.rtkit.enable = true;
+  ############################################################
+  ## Services
+  ############################################################
 
-  # XDG Portal
-  xdg.portal = {
-    enable = true;
-    config = {
-      niri.default = ["gnome" "gtk"];
-      common.default = ["gtk"];
-      obs.default = "gnome";
+  services = {
+    xserver.videoDrivers = [ "nvidia" ];
+
+    power-profiles-daemon.enable = true;
+    accounts-daemon.enable = true;
+    upower.enable = true;
+    timesyncd.enable = true;
+    gvfs.enable = true;
+
+    pipewire = {
+      enable = true;
+
+      alsa.enable = true;
+      pulse.enable = true;
     };
-    extraPortals = with pkgs; [
-      xdg-desktop-portal
-      xdg-desktop-portal-gnome
-      xdg-desktop-portal-gtk
-    ];
   };
 
-  # Fonts
-  fonts = {
-    enableDefaultPackages = true;
-    packages = with pkgs; [
-      fira-sans
-      fira-code
-      roboto
-      open-sans
-      inter
-      corefonts
-      lilex
-      noto-fonts
-      noto-fonts-cjk-sans
-      noto-fonts-cjk-serif
-      noto-fonts-color-emoji
-      liberation_ttf
-      dejavu_fonts
-      fira-code-symbols
-      material-symbols
-      material-icons
-      wqy_zenhei
-    ];
+  ############################################################
+  ## Security
+  ############################################################
+
+  security = {
+    polkit.enable = true;
+    rtkit.enable = true;
   };
 
-  # Networking
+  ############################################################
+  ## Networking
+  ############################################################
+
   networking.networkmanager.enable = true;
 
-  # Icons
-  xdg.icons.enable = true;
+  ############################################################
+  ## XDG
+  ############################################################
 
-  # Programs
-  programs = {
-    firefox.enable = true;
-    appimage = {
-      enable = true;
-      binfmt = true;
-    };
-    nix-ld.enable = true;
-    gamemode.enable = true;
-    niri = {
-      enable = true;
-      package = pkgs.niri-unstable;
-    };
-    steam.enable = true;
-    gpu-screen-recorder.enable = true;
-    virt-manager.enable = true;
-    dconf.enable = true;
-    noctalia-greeter = {
-      enable = true;
-      package = inputs.noctalia-greeter.packages.${pkgs.stdenv.hostPlatform.system}.default;
-    };
-    obs-studio = {
-      enable = true;
+  xdg = {
+    icons.enable = true;
 
-    # optional Nvidia hardware acceleration
-      package = (
-      pkgs.obs-studio.override {
-        cudaSupport = true;
-      }
-    );
+    portal = {
+      enable = true;
+      xdgOpenUsePortal = true;
 
-      plugins = with pkgs.obs-studio-plugins; [
-        wlrobs
-        obs-backgroundremoval
-        obs-pipewire-audio-capture
-        obs-vaapi
-        obs-gstreamer
-        obs-vkcapture
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-gnome
+        xdg-desktop-portal-gtk
       ];
     };
   };
 
-  # VM
-  virtualisation.libvirtd = {
-    enable = true;
-    qemu = {
-      package = pkgs.qemu_kvm;
-      runAsRoot = true;
-      swtpm.enable = true;
+  ############################################################
+  ## Fonts
+  ############################################################
+
+  fonts = {
+    enableDefaultPackages = true;
+
+    packages = with pkgs; [
+      fira-code
+      inter
+      lilex
+
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-color-emoji
+
+      material-symbols
+    ];
+  };
+
+  ############################################################
+  ## Programs
+  ############################################################
+
+  programs = {
+    firefox.enable = true;
+
+    appimage = {
+      enable = true;
+      binfmt = true;
+    };
+
+    nix-ld.enable = true;
+    gamemode.enable = true;
+    dconf.enable = true;
+
+    niri = {
+      enable = true;
+      package = pkgs.niri-unstable;
+    };
+
+    steam.enable = true;
+    gpu-screen-recorder.enable = true;
+    virt-manager.enable = true;
+
+    noctalia-greeter = {
+      enable = true;
+      package = inputs.noctalia-greeter.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    };
+  };
+
+  ############################################################
+  ## Virtualization
+  ############################################################
+
+  virtualisation = {
+    spiceUSBRedirection.enable = true;
+
+    libvirtd = {
+      enable = true;
+
+      qemu = {
+        package = pkgs.qemu_kvm;
+        runAsRoot = true;
+        swtpm.enable = true;
+      };
     };
   };
 
   users.groups.libvirtd.members = [ "xdenotte" ];
-  virtualisation.spiceUSBRedirection.enable = true;
 
-  # Swap
-  swapDevices = [{
-    device = "/var/lib/swapfile";
-    size = 8*1024;
-    priority = 0;
-  }];
+  ############################################################
+  ## Memory
+  ############################################################
 
   zramSwap = {
     enable = true;
@@ -196,81 +213,58 @@
     memoryPercent = 30;
   };
 
-  nix.settings = {
-    substituters = [
-      "https://niri-nix.cachix.org"
-      "https://noctalia.cachix.org"
-    ];
-    trusted-public-keys = [
-      "niri-nix.cachix.org-1:SvFtqpDcf7Sm1SMJdby1/+Y+6f3Yt3/3PMcSTKPJNJ0="
-      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
-    ];
-  };
+  ############################################################
+  ## Packages
+  ############################################################
 
-  # System packages (one per line)
   environment.systemPackages = with pkgs; [
-    # Core / utils
+    # Core
     git
     fastfetch
     htop
-    stress-ng
-    lshw
-    glib
     python3
-    mesa-demos
+    stress-ng
 
-    # Wayland / WM
-    xwayland-satellite-unstable
+    # Wayland
     brightnessctl
-    foot
-    xdg-user-dirs
-    wl-clipboard
     cliphist
+    foot
+    wl-clipboard
+    xwayland-satellite-unstable
 
-    # Desktop & theming
-    papirus-icon-theme
+    # Theming
     bibata-cursors
-    gnome-themes-extra
-    nwg-look
     font-manager
-    gsettings-desktop-schemas
-    qt6Packages.qt6ct
-    qt6Packages.qt5compat
-    kdePackages.qtbase
-    kdePackages.qtdeclarative
+    gnome-themes-extra
     kdePackages.qtstyleplugin-kvantum
     matugen
+    nwg-look
+    papirus-icon-theme
+    qt6Packages.qt6ct
 
-    # Apps and Games
-    gpu-screen-recorder-gtk
-    vesktop
-    telegram-desktop
-    heroic
-    prismlauncher
-    spotify
-    nautilus
-    file-roller
-    kdePackages.kate
-    kdePackages.kdenlive
-    loupe
-    protonplus
-    kdiskmark
-    libreoffice-qt
-    inputs.blender-bin.packages.${stdenv.hostPlatform.system}.default
-
-    # Multimedia
-    mpv
+    # Applications
     audacity
     cava
+    file-roller
+    gpu-screen-recorder-gtk
+    heroic
+    inputs.blender-bin.packages.${pkgs.stdenv.hostPlatform.system}.default
+    kdiskmark
+    kdePackages.kate
+    kdePackages.kdenlive
+    libreoffice-qt
+    loupe
+    mpv
+    nautilus
     pavucontrol
+    prismlauncher
+    protonplus
+    spotify
+    telegram-desktop
+    discord
+
+    # Multimedia
     ffmpeg
-    gst_all_1.gstreamer
-    gst_all_1.gst-plugins-base
-    gst_all_1.gst-plugins-good
-    gst_all_1.gst-plugins-bad
-    gst_all_1.gst-plugins-ugly
-    gst_all_1.gst-libav
-    gst_all_1.gst-vaapi
 
     # Gaming
     mangohud
