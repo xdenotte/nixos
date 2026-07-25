@@ -139,16 +139,35 @@
     enableDefaultPackages = true;
 
     packages = with pkgs; [
-      fira-code
-      inter
-      lilex
-
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-color-emoji
 
+      liberation_ttf
+      dejavu_fonts
+
+      inter
+      roboto
+
+      source-sans
+      source-serif
+      source-code-pro
+
+      corefonts
       material-symbols
+      lilex
     ];
+
+  fontconfig = {
+    enable = true;
+
+    defaultFonts = {
+      sansSerif = [ "Inter" "Noto Sans" "DejaVu Sans" ];
+      serif = [ "Noto Serif" "DejaVu Serif" ];
+      monospace = [ "Lilex" "Source Code Pro" "DejaVu Sans Mono" ];
+      emoji = [ "Noto Color Emoji" ];
+      };
+    };
   };
 
   ############################################################
@@ -261,7 +280,8 @@
     protonplus
     spotify
     telegram-desktop
-    discord
+    equibop
+    goverlay
 
     # Multimedia
     ffmpeg
