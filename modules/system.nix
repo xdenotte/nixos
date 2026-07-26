@@ -142,6 +142,7 @@
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-color-emoji
+      jetbrains-mono
 
       liberation_ttf
       dejavu_fonts
@@ -160,12 +161,13 @@
 
   fontconfig = {
     enable = true;
+    antialias = true;
+    hinting.enable = true;
 
     defaultFonts = {
-      sansSerif = [ "Inter" "Noto Sans" "DejaVu Sans" ];
-      serif = [ "Noto Serif" "DejaVu Serif" ];
-      monospace = [ "Lilex" "Source Code Pro" "DejaVu Sans Mono" ];
-      emoji = [ "Noto Color Emoji" ];
+      sansSerif = [ "Noto Sans" "Liberation Sans" ];
+      serif = [ "Noto Serif" "Liberation Serif" ];
+      monospace = [ "JetBrainsMono Nerd Font" "DejaVu Sans Mono" ];
       };
     };
   };
